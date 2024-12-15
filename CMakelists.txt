@@ -1,0 +1,32 @@
+cmake_minimum_required(VERSION 3.19)
+
+project(vulkandemo)
+
+# include
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../glm-1.0.1/)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../glfw-3.4.bin.WIN64/include)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../../VulkanSDK/1.3.296.0/include)
+
+# library directories
+link_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../glfw-3.4.bin.WIN64/lib-vc2022/)
+link_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../../VulkanSDK/1.3.296.0/Lib/)
+
+# srcs
+aux_source_directory(${CMAKE_CURRENT_SOURCE_DIR}/src SRC)
+
+# why?
+set(CMAKE_CXX_STANDARD 17)
+include(CheckCXXCompilerFlag)
+set(CXX_STANDARD "/std:c++latest")
+
+
+# target
+# https://stackoverflow.com/questions/33400777/error-lnk2019-unresolved-external-symbol-main-referenced-in-function-int-cde
+# https://cmake.org/cmake/help/latest/command/add_executable.html
+add_executable(${PROJECT_NAME}
+    ${SRC}
+)
+
+# libraries
+target_link_libraries(${PROJECT_NAME} PRIVATE glfw3 vulkan-1)
+
